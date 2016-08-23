@@ -36,7 +36,8 @@ class AccountInvoice(models.Model):
         states={'draft': [('readonly', False)]}
     )
     journal_type = fields.Selection(
-        related='journal_id.type'
+        related='journal_id.type',
+        readonly=True,
     )
     plan_id = fields.Many2one(
         'account.invoice.plan',
@@ -78,7 +79,8 @@ class AccountInvoice(models.Model):
             payment_term=payment_term, partner_bank_id=partner_bank_id,
             company_id=company_id)
         if partner_id:
-            partner = self.env['res.partner'].browse(
+            partner = self.env['res.partner'].with_context(
+                force_company=company_id).browse(
                 partner_id).commercial_partner_id
             result['value'][
                 'plan_id'] = partner.default_sale_invoice_plan_id.id
@@ -122,6 +124,11 @@ class AccountInvoice(models.Model):
                 'period_id': False,
             }
 
+            # por compatibilidad con stock_picking_invoice_link
+            # como el campo nuevo tiene copy=False lo copiamos nosotros
+            if 'picking_ids' in self._fields:
+                default['picking_ids'] = [(6, 0, self.sudo().picking_ids.ids)]
+
             company = False
             journal = False
             # if op journal and is different from invoice journal
@@ -160,7 +167,7 @@ class AccountInvoice(models.Model):
                     invoice_type, self.partner_id.id,
                     date_invoice=default.get(
                         'date_invoice', False) or self.date_invoice,
-                    payment_term=self.payment_term,
+                    payment_term=self.payment_term.id,
                     company_id=company.id)['value']
                 default.update({
                     'account_id': partner_data.get('account_id', False),
@@ -197,6 +204,11 @@ class AccountInvoice(models.Model):
                     'invoice_id': new_invoice.id,
                     'quantity': new_quantity,
                 }
+                # por compatibilidad con stock_picking_invoice_link
+                # como el campo nuevo tiene copy=False lo copiamos nosotros
+                if 'move_line_ids' in self._fields:
+                    default['move_line_ids'] = [
+                        (6, 0, line.sudo().move_line_ids.ids)]
 
                 # if company has change, then we need to update lines
                 if company and company != self.company_id:
@@ -283,7 +295,12 @@ class AccountInvoice(models.Model):
             # we only send first invoice because it does not works ok with many
             # invoices
             self.redirect_workflow([(self.id, invoices[0].id)])
+            # borrar factura
+            # por compatibilidad con sale commission, borramos las lineas y
+            # luego la factura
+            self.invoice_line.unlink()
             self.unlink()
+            # actualizar pickings
         else:
             for line in self.invoice_line:
                 line_quantity = last_quantities.get(line.id)
@@ -293,6 +310,13 @@ class AccountInvoice(models.Model):
                 else:
                     line.quantity = last_quantities.get(line.id)
             # self.operation_ids.unlink()
+
+        # por compatibilidad con stock_picking_invoice_link
+        # we set all related pickings on invoiced state
+        if 'picking_ids' in self._fields:
+            pickings = invoices.sudo().mapped('picking_ids').filtered(
+                lambda x: x.state != 'cancel')
+            pickings.write({'invoice_state': 'invoiced'})
 
         # set plan false for all invoices
         invoices.write({'plan_id': False})
