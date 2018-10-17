@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 from openerp import fields, models, api, _
-from openerp.exceptions import ValidationError
+from openerp.exceptions import ValidationError, UserError
 
 
 class account_change_currency(models.TransientModel):
@@ -41,10 +41,10 @@ class account_change_currency(models.TransientModel):
             if self.currency_id == invoice.currency_id:
                 raise ValidationError(_(
                     'Old Currency And New Currency can not be the same'))
-            currency = invoice.currency_id.with_context(
-                date=invoice.date_invoice or fields.Date.context_today(self))
-            self.currency_rate = currency.compute(
-                1.0, self.currency_id)
+            currency = invoice.currency_id
+            # currency = invoice.currency_id.with_context(
+            #     date=invoice.date_invoice or fields.Date.context_today(self))
+            self.currency_rate = currency.compute(1.0, self.currency_id)
 
     @api.multi
     def change_currency(self, ):
