@@ -3,7 +3,7 @@ from openerp import fields, models, api, _
 from openerp.exceptions import ValidationError, UserError
 
 
-class account_change_currency(models.TransientModel):
+class AccountChangeCurrency(models.TransientModel):
     _name = 'account.change.currency'
     _description = 'Change Currency'
 
