@@ -19,7 +19,7 @@
 #
 ##############################################################################
 {
-    'author': 'ADHOC SA,Odoo Community Association (OCA)',
+    'author': 'ADHOC SA, Blanco Martín & Asociados, Odoo Community Association (OCA)',
     'category': 'Accounting & Finance',
     'demo_xml': [],
     'depends': ['account'],
@@ -31,7 +31,7 @@
         'wizard/account_change_currency_view.xml',
         'views/invoice_view.xml',
     ],
-    'version': '11.0.1.0.0',
+    'version': '11.0.1.1.0',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3'
 }
