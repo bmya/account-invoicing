@@ -25,7 +25,7 @@ class sale_order_line(models.Model):
         return res
 
 
-class sale_order(models.Model):
+class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     different_currency_id = fields.Many2one(

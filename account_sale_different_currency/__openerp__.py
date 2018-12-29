@@ -42,12 +42,12 @@ monedas pertinentes y de "account" y "product" a 3 decimales.
         'account_analytic_analysis'
     ],
     'data': [
-        'wizard/sale_make_invoice_advance.xml',
-        'invoice_view.xml',
-        'pricelist_view.xml',
+        # 'wizard/sale_make_invoice_advance.xml',
+        # 'invoice_view.xml',
+        # 'pricelist_view.xml',
         'sale_view.xml',
-        'company_view.xml',
-        'account_analytic_view.xml',
+        # 'company_view.xml',
+        # 'account_analytic_view.xml',
     ],
     'demo': [],
     'installable': True,
