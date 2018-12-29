@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import models
+from . import models
 # import account_invoice
 # import company
 # import pricelist
