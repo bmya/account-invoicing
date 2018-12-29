@@ -1,4 +1,4 @@
-<openerp>
+<odoo>
     <data>
         <record id="view_order_form" model="ir.ui.view">
             <field name="name">sale.order.different.currency.form</field>
@@ -16,4 +16,4 @@
             </field>
         </record>
     </data>
-</openerp>
+</odoo>
