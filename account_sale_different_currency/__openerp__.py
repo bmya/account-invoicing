@@ -39,7 +39,7 @@ monedas pertinentes y de "account" y "product" a 3 decimales.
     'license': 'AGPL-3',
     'depends': [
         'sale',
-        'account_analytic_analysis'
+        # 'account_analytic_analysis'
     ],
     'data': [
         # 'wizard/sale_make_invoice_advance.xml',
