@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
+import models
 # import account_invoice
-import sale
 # import company
 # import pricelist
 # import account_analytic

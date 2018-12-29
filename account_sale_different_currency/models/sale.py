@@ -36,7 +36,7 @@ class SaleOrder(models.Model):
             'draft': [('readonly', False)], 'sent': [('readonly', False)]},
         help='If you want the invoice in a different currency from the sale '
         'order, please select a currency'
-        )
+    )
 
     # def onchange_pricelist_id(
     #         self, cr, uid, ids, pricelist_id, order_lines, context=None):
