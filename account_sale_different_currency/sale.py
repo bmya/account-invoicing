@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from openerp.tools.translate import _
+from odoo.tools.translate import _
 from odoo import models, fields, api
-from odoo.osv import osv
+# from odoo.osv import osv
 
 
 # class SaleOrderLine(models.Model):
