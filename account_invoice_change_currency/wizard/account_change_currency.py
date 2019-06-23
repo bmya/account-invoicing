@@ -81,7 +81,10 @@ class AccountChangeCurrency(models.TransientModel):
         invoice.currency_id = self.currency_id.id
         invoice.compute_taxes()
         try:
-            invoice.comment = invoice.comment[:invoice.comment.find('//') + 1] + message2
+            if '//' in invoice.comment:
+                invoice.comment = invoice.comment[:invoice.comment.find('//') + 1] + message2
+            else:
+                invoice.comment = invoice.comment + ' ' + message2
         except AttributeError:
             invoice.comment = message2
         invoice.message_post(message)
