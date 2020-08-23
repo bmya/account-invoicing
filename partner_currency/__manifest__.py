@@ -8,8 +8,8 @@
     'name': 'Diferent Currency for partner operations',
     'test': [],
     'data': [
-        'security/security.xml',
-        'views/partner_view.xml',
+        # 'security/security.xml',
+        # 'views/partner_view.xml',
     ],
     'version': '1.0',
     'website': 'www.bmya.cl',
