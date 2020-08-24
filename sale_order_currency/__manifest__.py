@@ -31,7 +31,7 @@
     'depends': ['base', 'sale', 'account'],
     'data': [
         'views/sale_views.xml',
-        'views/partner_vies.xml',
+        'views/partner_view.xml',
     ],
     'installable': True,
 }
