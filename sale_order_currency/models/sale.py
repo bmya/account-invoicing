@@ -24,11 +24,11 @@ class SaleOrder(models.Model):
             raise UserError(_('Please define an accounting sales journal for this company.'))
 
         if self.invoice_currency:
-            account_currency=self.env.user.company_id.currency_id.id
-            nombre=self.env.user.company_id.currency_id.name
+            account_currency = self.env.user.company_id.currency_id.id
+            nombre = self.env.user.company_id.currency_id.name
         else:
-            account_currency=self.pricelist_id.currency_id.id
-            nombre=self.pricelist_id.currency_id.name
+            account_currency = self.pricelist_id.currency_id.id
+            nombre = self.pricelist_id.currency_id.name
 
         invoice_vals = {
             'name': self.client_order_ref or '',
@@ -70,9 +70,9 @@ class SaleOrderLine(models.Model):
             account = fpos.map_account(account)
 
         if self.order_id.invoice_currency:
-            price_converted=self.price_unit / self.order_id.pricelist_id.currency_id.rate
+            price_converted = self.price_unit / self.order_id.pricelist_id.currency_id.rate
         else:
-            price_converted=self.price_unit
+            price_converted = self.price_unit
 
         res = {
             'name': self.name,
@@ -87,6 +87,6 @@ class SaleOrderLine(models.Model):
             'invoice_line_tax_ids': [(6, 0, self.tax_id.ids)],
             'account_analytic_id': self.order_id.analytic_account_id.id,
             'analytic_tag_ids': [(6, 0, self.analytic_tag_ids.ids)],
-            'display_type': self.display_type,
+            # 'display_type': self.display_type,
         }
         return res
